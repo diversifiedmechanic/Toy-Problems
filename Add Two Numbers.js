@@ -18,57 +18,42 @@ Explanation: 342 + 465 = 807.
  * }
  */
 
+ let ListNode = function(val) {
+   this.val = val;
+   this.next = null;
+ }
+
 var addTwoNumbers = function(l1, l2) {
   let carry = 0;
-  let newList = {val: null, next: null};
+
+  let firstSum = l1.val + l2.val;
+  if (firstSum >= 10) {
+    carry = 1;
+    firstSum = firstSum % 10;
+  }
+  l1 = l1.next;
+  l2 = l2.next;
+
+  let newList = new ListNode(firstSum);
   let head = newList;
 
   while (l1 !== null || l2 !== null) {
-    if (l1 !== null && l2 !== null) {
-      let sum = l1.val + l2.val + carry;
+    if (l1 === null) l1 = { val: 0, next: null};
+    if (l2 === null) l2 = { val: 0, next: null};
+    let sum = l1.val + l2.val + carry;
 
-      if (sum >= 10) {
-        carry = 1;
-        sum = sum % 10;
-      } else {
-        carry = 0;
-      }
-
-      if (newList.val !== null){
-        newList.val = sum;
-      } else {
-        newList.next = new ListNode(sum);
-        newList = newList.next;
-      }
-      l1 = l1.next;
-      l2 = l2.next;
-    } else if (l1 !== null) {
-      sum = l1.val + carry;
-
-      if (sum >= 10) {
-        carry = 1;
-        sum = sum % 10;
-      } else {
-        carry = 0;
-      }
-
-      newList.next = new ListNode(sum);
-      newList = newList.next;
-      l1 = l1.next;
+    if (sum >= 10) {
+      carry = 1;
+      sum = sum % 10;
     } else {
-      let sum = l2.val + carry;
-
-      if (sum >= 10) {
-        carry = 1;
-        sum = sum % 10;
-      } else {
-        carry = 0;
-      }
-
-      newList.next = new ListNode(sum);
-      newList = newList.next;
-      l2 = l2.next;
+      carry = 0;
     }
+
+    newList.next = new ListNode(sum);
+    newList = newList.next;
+
+    l1 = l1.next;
+    l2 = l2.next;
   }
 
   if (carry) {
@@ -78,3 +63,17 @@ var addTwoNumbers = function(l1, l2) {
 
     return head;
 };
+
+let A = new ListNode(2);
+let head1 = A;
+A.next = new ListNode(4);
+A = A.next;
+A.next = new ListNode(3);
+
+let B = new ListNode(5);
+let head2 = B;
+B.next = new ListNode(6);
+B = B.next;
+B.next = new ListNode(4);
+
+console.log(addTwoNumbers(head1, head2));
