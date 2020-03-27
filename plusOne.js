@@ -23,33 +23,39 @@ var plusOne = function(digits) {
   // var to track if there is a carry
   let carry = false;
   // var to keep track of idx
-  let idx = 0;
+  let idx = 1;
 
   // while there is a carry
   do {
     let currentIndex = arr.length - idx
     // add one to the current location in array
-    let sum = arr[currentIndex];
+    let sum = arr[currentIndex] + 1;
 
     // if the total is more than ten
     if (sum >= 10) {
       // set current location to ones place
-      arr[currentIndex] += sum - 10;
+      arr[currentIndex] = sum - 10;
       // set carry to true
       carry = true;
     // else
     } else {
       // set current location to total
-      arr[currentIndex] += sum
+      arr[currentIndex] = sum
       // set carry to false
       carry = false;
     }
 
-    if (carry === true && currentIndex === 0) arr.push(1);
+    if (carry === true && currentIndex === 0) {
+      arr.unshift(1);
+      carry = false;  
+    } 
 
     idx++;
+
   } while(carry);
 
   // return array
   return arr;
 };
+
+console.log(plusOne([9,9,9]));
