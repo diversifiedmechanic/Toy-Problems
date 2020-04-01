@@ -70,3 +70,18 @@ var convert = function(s, numRows) {
 };
 
 console.log(convert("AB", 1) === "AB");
+
+
+var someFunction = (string, target) => {
+  // result string
+  let result = '';
+  // iterate over the string
+  for (let i = 0; i < string.length; i++) {
+    // if the string matches the target
+    // add to the result string
+    
+  }
+  
+  // return result string
+  return result;
+};
