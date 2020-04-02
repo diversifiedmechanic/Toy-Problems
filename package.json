@@ -1,0 +1,23 @@
+{
+  "name": "Toy-Problems",
+  "version": "1.0.0",
+  "description": "",
+  "main": "addTwoNumbers.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diversifiedmechanic/Toy-Problems.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/diversifiedmechanic/Toy-Problems/issues"
+  },
+  "homepage": "https://github.com/diversifiedmechanic/Toy-Problems#readme",
+  "dependencies": {
+    "jest": "^25.2.4"
+  }
+}
