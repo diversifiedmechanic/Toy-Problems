@@ -33,9 +33,7 @@ Note:
  * @return {number}
  */
 var lastStoneWeight = function(stones) {
-  let oneStoneLeft = false;
-
-  while (!oneStoneLeft) {
+  while (stones.length > 1) {
 
     for (let i = 0; i < stones.length - 2; i++) {
       if (stones[i] >= stones[stones.length -1]) {
@@ -54,14 +52,7 @@ var lastStoneWeight = function(stones) {
     stones[stones.length - 2] = Math.abs(stones[stones.length - 1 ] - stones[stones.length - 2]);
 
     stones.pop();
-
-    if (stones.length <= 1) oneStoneLeft = true;
   }
-
-  console.log(stones);
 
   return stones[0];
 };
-
-console.log(lastStoneWeight([7,6,7,6,9]))
-
