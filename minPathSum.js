@@ -22,11 +22,27 @@ Explanation: Because the path 1→3→1→1→1 minimizes the sum.
 // should run in O(n*m)
 // would be done by 'constructing' a new grid
 var minPathSum = function(grid) {
-  let newGrid = [];
+  // construct new grid
+  let newGrid = [],
+    topVal,
+    leftVal;
   grid.forEach(row => newGrid.push(Array(grid[0].length)));
 
-  return newGrid;
+  newGrid[0][0] = grid[0][0];
+
+  // go down the columns
+  for (let i = 0; i < grid.length; i++) {
+    // go down the rows
+    for (let j = 0; j < grid[i]; j++) {
+      // get the min value of checking up and checking left
+      if (newGrid[i - 1]) topVal = grid[i][j] + newGrid[i - 1][j];
+      if (newGrid[i][j - 1]) leftVal = grid[i][j] + newGrid[i][j - 1];
+      // and set that value to the current index
+      newGrid[i][j] = Math.min(topVal, leftVal);
+    }
+  }
+
+  return newGrid[grid.length - 1][grid[0].length - 1];
 };
 
 console.log(minPathSum([[1,3,1],[1,5,1],[4,2,1]]));
-console.log(minPathSum([[1,3,1],[1,5,1],[4,2,1]])[0]);
