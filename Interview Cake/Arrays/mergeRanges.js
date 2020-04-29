@@ -34,36 +34,59 @@ Write a solution that's efficient even when we can't put a nice upper bound on t
 */
 
 // horrible complexity but solves.
+// function mergeRanges(meetings) {
+//   // array of merged meeting
+//   let merged = [];
+
+//   // iterate through the meetings
+//   meetings.forEach((meeting) => {
+//     let notMerged = true;
+//     let idx = 0;
+
+//     // compare them to the meetings already merged
+//     while (notMerged && idx < merged.length) {
+//       // if the start or end falls within the merged s / e,
+//       if ((meeting.startTime >= merged[idx].startTime && meeting.startTime <= merged[idx].endTime)
+//         || (meeting.endTime >= merged[idx].startTime && meeting.endTime <= merged[idx].endTime)) {
+//           // take the smallest of the starts
+//           merged[idx].startTime = Math.min(merged[idx].startTime, meeting.startTime);
+//           // take the largest of the ends
+//           merged[idx].endTime = Math.max(merged[idx].endTime, meeting.endTime);
+
+//           notMerged = false;
+//         }
+
+//       idx++;
+//     }
+
+//     // if never merged, add new range to merged meetings list
+//     if (notMerged) merged.push(meeting);
+//   });
+
+//   merged.sort((a, b) => a.startTime - b.startTime);
+
+//   return merged;
+// }
+
+
+// O(n log n)
 function mergeRanges(meetings) {
-  // array of merged meeting
-  let merged = [];
+  // this over-all helps reduce complexity and the result needs to be sorted by start time
+  meetings.sort((a, b) => a.startTime - b.startTime);
 
-  // iterate through the meetings
-  meetings.forEach((meeting) => {
-    let notMerged = true;
-    let idx = 0;
+  // instantiate merged arr with earliest start time meeting
+  let merged = [meetings[0]];
 
-    // compare them to the meetings already merged
-    while (notMerged && idx < merged.length) {
-      // if the start or end falls within the merged s / e,
-      if ((meeting.startTime >= merged[idx].startTime && meeting.startTime <= merged[idx].endTime)
-        || (meeting.endTime >= merged[idx].startTime && meeting.endTime <= merged[idx].endTime)) {
-          // take the smallest of the starts
-          merged[idx].startTime = Math.min(merged[idx].startTime, meeting.startTime);
-          // take the largest of the ends
-          merged[idx].endTime = Math.max(merged[idx].endTime, meeting.endTime);
+  for (let i = 1; i < meetings.length; i++) {
+    let currentMeeting = meetings[i];
+    let lastMerged = merged[merged.length - 1];
 
-          notMerged = false;
-        }
-
-      idx++;
+    if (currentMeeting.startTime <= lastMerged.endTime) {
+      lastMerged.endTime = Math.max(currentMeeting.endTime, lastMerged.endTime);
+    } else {
+      merged.push(currentMeeting);
     }
-
-    // if never merged, add new range to merged meetings list
-    if (notMerged) merged.push(meeting);
-  });
-
-  merged.sort((a, b) => a.startTime - b.startTime);
+  }
 
   return merged;
 }
