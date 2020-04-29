@@ -33,6 +33,7 @@ Do not assume the meetings are in order. The meeting times are coming from multi
 Write a solution that's efficient even when we can't put a nice upper bound on the numbers representing our time ranges. Here we've simplified our times down to the number of 30-minute slots past 9:00 am. But we want the function to work even for very large numbers, like Unix timestamps. In any case, the spirit of the challenge is to merge meetings where startTime and endTime don't have an upper bound.
 */
 
+// horrible complexity but solves.
 function mergeRanges(meetings) {
   // array of merged meeting
   let merged = [];
@@ -61,6 +62,8 @@ function mergeRanges(meetings) {
     // if never merged, add new range to merged meetings list
     if (notMerged) merged.push(meeting);
   });
+
+  merged.sort((a, b) => a.startTime - b.startTime);
 
   return merged;
 }
