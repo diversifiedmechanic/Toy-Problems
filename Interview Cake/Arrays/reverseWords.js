@@ -21,24 +21,63 @@ console.log(message.join(''));
 // Prints: 'steal pound cake'
 */
 function reverseWords(message) {
-  let leftWordIdxStart = 0, leftWordIdxEnd = 0;
-  let rightWordIdxStart, rightWordIdxEnd;
+  let leftWordIdxStart = 0, leftWordIdxEnd;
+  let rightWordIdxStart, rightWordIdxEnd = message.length - 1;
 
-  while (leftWordIdxStart !== rightWordIdxStart) {
-    let leftWord, rightWord;
+  while (true) {
+    let foundLeftWord = false, foundRightWord = false;
+    let leftIdx, rightIdx;
 
-    if (leftWordIdxStart) leftWordIdxStart = leftWordIdxEnd + 2;
+    // find the new start
+    // leftWordIdxStart = leftWordIdxEnd + 2;
+    leftIdx = leftWordIdxStart;
 
     // find words coming from the left and where last word was left off
-    for (let i = leftWordIdxEnd + 2; i <= message; i++) {
+    while(!foundLeftWord) {
       // set left word index to current index
-      if (message[i] === ' ') leftWordIdxEnd = i - 1;
-    }
-    // find words coming from the right and where last word was left off
-    for (let j = rightWordIdxStart - 2; j <= 0; j--) {
-      // set left word index to current index
-      if (message[j] === ' ') leftWordIdxEnd = j - 1;
-    }
-  }
+      if (message[leftIdx] === ' ') {
+        leftWordIdxEnd = leftIdx;
+        foundLeftWord = true;
+        break;
+      }
 
+      leftIdx++;
+    }
+
+    // find the new start
+    // rightWordIdxEnd = rightWordIdxStart - 2;
+    rightIdx = rightWordIdxEnd;
+
+
+    // find words coming from the right and where last word was left off
+    while(!foundRightWord) {
+      // set left word index to current index
+      if (message[rightIdx] === ' ') {
+        rightWordIdxStart = rightIdx + 1;
+        foundRightWord = true;
+        break;
+      }
+
+      rightIdx--;
+    }
+
+    // if they are the same index, we are at the same word
+    if (leftWordIdxStart >= rightWordIdxStart) break;
+
+    let leftWord = message.slice(leftWordIdxStart, leftWordIdxEnd);
+    let rightWord = message.slice(rightWordIdxStart, rightWordIdxEnd + 1);
+
+    message.splice(leftWordIdxStart, leftWord.length, ...rightWord);
+    message.splice(rightWordIdxStart + 2, rightWord.length, ...leftWord);
+
+    leftWordIdxStart = leftWordIdxStart + rightWord.length - 1 + 2;
+    rightWordIdxEnd = rightWordIdxStart - leftWord.length - 1;
+  }
 }
+
+let test = [ 'c', 'a', 'k', 'e', ' ', 'p', 'o', 'u', 'n', 'd', ' ', 's', 't', 'e', 'a', 'l', ' ', 'p', 'l', 'e', 'a', 's', 'e' ];
+console.log(test.length);
+
+reverseWords(test)
+
+console.log(test);
