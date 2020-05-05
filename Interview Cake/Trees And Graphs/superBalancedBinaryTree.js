@@ -24,123 +24,111 @@ class BinaryTreeNode {
 }
 
 
-function isBalanced(treeRoot, depth = 0) {
-  // if no right or left // return 0
-  if (treeRoot.left === null && treeRoot.right === null) {
-    if (depth === 0) return true;
-    return 0;
+function isBalanced(treeRoot) {
+  // edge case of not having any nodes, return true
+  if (!treeRoot) return true;
+
+  // store the depths come across so far
+  let depths = [];
+
+  // store the node and the depth
+  // add the root to the storage array w/ depth
+  let store = [[treeRoot, 0]];
+
+  // while there are nodes in the storage array
+  while (store.length) {
+    // pop the 'newest' node off and save references to node and depth
+    let [node, depth] = store.pop();
+
+    // if the node has no children -> leaf
+    if (!node.left && !node.right) {
+      // check to see if a new depth
+      if (depths.indexOf(depth) === -1) {
+        // add to the depth array
+        depths.push(depth);
+      }
+
+      // if there are more than two depth in storage -> greater then 1 depth diff -> 2, 3, 4
+      // or if the difference in depths is greater then 1
+      if ((depths.length > 2) || (depths.length > 1 && Math.abs(depths[0] - depths[1]) > 1)) {
+        // return false
+        return false;
+      }
+
+    // otherwise, has children
+    } else {
+      // add right side to the storage arr w/depth
+      if (node.right) {
+        store.push([node.right, depth + 1]);
+      }
+
+      // add left side to storage arr w/depth
+      if (node.left) {
+        store.push([node.left, depth + 1]);
+      }
+    }
   }
-
-  // vars for left and right depths
-  let leftDepth, rightDepth;
-
-  // if there is a left side
-  if (treeRoot.left) {
-    // get the value of the left side
-    leftDepth = isBalanced(treeRoot.left, depth + 1);
-
-    // if falsy and not zero
-    if (!leftDepth && leftDepth !== 0) return false;
-
-    // add 1 to the returned value
-    leftDepth += 1;
-
-  // otherwise set left to 0
-  } else {
-    leftDepth = 0;
-  }
-
-  // if there is a right side
-    // find the depth adding 1 to the returned value
-  // otherwise set right to 0
-
-  if (treeRoot.right) {
-    // get the value of the left side
-    rightDepth = isBalanced(treeRoot.right, depth + 1);
-
-    // if falsy and not zero
-    if (!rightDepth && rightDepth !== 0) return false;
-
-    // add 1 to the returned value
-    rightDepth += 1;
-
-  // otherwise set left to 0
-  } else {
-    rightDepth = 0;
-  }
-
-  console.log('leafVal: ', treeRoot.value, 'leftDepth: ', leftDepth, 'rightDepth: ', rightDepth);
-
-  // leftDepth - rightDepth is larger then 2 and one side is not 0
-  if (leftDepth !== 0 && rightDepth !== 0 && Math.abs(leftDepth - rightDepth) > 1) {
-    return false;
-
-    // otherwise
-  } else if (depth !== 0) {
-    // return the greater of leftDepth or rightDepth
-    return Math.max(leftDepth, rightDepth);
-  } else {
-    return true;
-  }
+  // return true because never hit false.
+  return true;
 }
 
 var desc, treeRoot, leftNode, rightNode;
 
-// desc = 'full tree';
-// treeRoot = new BinaryTreeNode(5);
-// leftNode = treeRoot.insertLeft(8);
-// leftNode.insertLeft(1);
-// leftNode.insertRight(2);
-// rightNode = treeRoot.insertRight(6);
-// rightNode.insertLeft(3);
-// rightNode.insertRight(4);
-// assertEquals(isBalanced(treeRoot), true, desc);
+desc = 'full tree';
+treeRoot = new BinaryTreeNode(5);
+leftNode = treeRoot.insertLeft(8);
+leftNode.insertLeft(1);
+leftNode.insertRight(2);
+rightNode = treeRoot.insertRight(6);
+rightNode.insertLeft(3);
+rightNode.insertRight(4);
+assertEquals(isBalanced(treeRoot), true, desc);
 
-// desc = 'both leaves at the same depth';
-// treeRoot = new BinaryTreeNode(3);
-// leftNode = treeRoot.insertLeft(4);
-// leftNode.insertLeft(1);
-// rightNode = treeRoot.insertRight(6);
-// rightNode.insertRight(9);
-// assertEquals(isBalanced(treeRoot), true, desc);
+desc = 'both leaves at the same depth';
+treeRoot = new BinaryTreeNode(3);
+leftNode = treeRoot.insertLeft(4);
+leftNode.insertLeft(1);
+rightNode = treeRoot.insertRight(6);
+rightNode.insertRight(9);
+assertEquals(isBalanced(treeRoot), true, desc);
 
-// desc = 'leaf heights differ by one';
-// treeRoot = new BinaryTreeNode(6);
-// leftNode = treeRoot.insertLeft(1);
-// rightNode = treeRoot.insertRight(0);
-// rightNode.insertRight(7);
-// assertEquals(isBalanced(treeRoot), true, desc);
+desc = 'leaf heights differ by one';
+treeRoot = new BinaryTreeNode(6);
+leftNode = treeRoot.insertLeft(1);
+rightNode = treeRoot.insertRight(0);
+rightNode.insertRight(7);
+assertEquals(isBalanced(treeRoot), true, desc);
 
-// desc = 'leaf heights differ by two';
-// treeRoot = new BinaryTreeNode(6);
-// leftNode = treeRoot.insertLeft(1);
-// rightNode = treeRoot.insertRight(0);
-// rightNode.insertRight(7).insertRight(8);
-// assertEquals(isBalanced(treeRoot), false, desc);
+desc = 'leaf heights differ by two';
+treeRoot = new BinaryTreeNode(6);
+leftNode = treeRoot.insertLeft(1);
+rightNode = treeRoot.insertRight(0);
+rightNode.insertRight(7).insertRight(8);
+assertEquals(isBalanced(treeRoot), false, desc);
 
-// desc = 'three leaves total';
-// treeRoot = new BinaryTreeNode(1);
-// leftNode = treeRoot.insertLeft(5);
-// rightNode = treeRoot.insertRight(9);
-// rightNode.insertLeft(8);
-// rightNode.insertRight(5);
-// assertEquals(isBalanced(treeRoot), true, desc);
+desc = 'three leaves total';
+treeRoot = new BinaryTreeNode(1);
+leftNode = treeRoot.insertLeft(5);
+rightNode = treeRoot.insertRight(9);
+rightNode.insertLeft(8);
+rightNode.insertRight(5);
+assertEquals(isBalanced(treeRoot), true, desc);
 
-// desc = 'both subtrees superbalanced';
-// treeRoot = new BinaryTreeNode(1);
-// leftNode = treeRoot.insertLeft(5);
-// rightNode = treeRoot.insertRight(9);
-// rightNode.insertLeft(8).insertLeft(7);
-// rightNode.insertRight(5);
-// assertEquals(isBalanced(treeRoot), false, desc);
+desc = 'both subtrees superbalanced';
+treeRoot = new BinaryTreeNode(1);
+leftNode = treeRoot.insertLeft(5);
+rightNode = treeRoot.insertRight(9);
+rightNode.insertLeft(8).insertLeft(7);
+rightNode.insertRight(5);
+assertEquals(isBalanced(treeRoot), false, desc);
 
-// desc = 'both subtrees superbalanced two';
-// treeRoot = new BinaryTreeNode(1);
-// leftNode = treeRoot.insertLeft(2);
-// leftNode.insertLeft(3);
-// leftNode.insertRight(7).insertRight(8);
-// treeRoot.insertRight(4).insertRight(5).insertRight(6).insertRight(9);
-// assertEquals(isBalanced(treeRoot), false, desc);
+desc = 'both subtrees superbalanced two';
+treeRoot = new BinaryTreeNode(1);
+leftNode = treeRoot.insertLeft(2);
+leftNode.insertLeft(3);
+leftNode.insertRight(7).insertRight(8);
+treeRoot.insertRight(4).insertRight(5).insertRight(6).insertRight(9);
+assertEquals(isBalanced(treeRoot), false, desc);
 
 desc = 'three leaves at different levels';
 treeRoot = new BinaryTreeNode(1);
@@ -152,14 +140,14 @@ leftLeft.insertRight(6);
 treeRoot.insertRight(7).insertRight(8).insertRight(9).insertRight(10);
 assertEquals(isBalanced(treeRoot), false, desc);
 
-// desc = 'only one node';
-// treeRoot = new BinaryTreeNode(1);
-// assertEquals(isBalanced(treeRoot), true, desc);
+desc = 'only one node';
+treeRoot = new BinaryTreeNode(1);
+assertEquals(isBalanced(treeRoot), true, desc);
 
-// desc = 'linked list tree';
-// treeRoot = new BinaryTreeNode(1);
-// treeRoot.insertRight(2).insertRight(3).insertRight(4);
-// assertEquals(isBalanced(treeRoot), true, desc);
+desc = 'linked list tree';
+treeRoot = new BinaryTreeNode(1);
+treeRoot.insertRight(2).insertRight(3).insertRight(4);
+assertEquals(isBalanced(treeRoot), true, desc);
 
 function assertEquals(a, b, desc) {
   if (a === b) {
