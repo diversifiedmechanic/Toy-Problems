@@ -37,23 +37,49 @@ The value of each color in image[i][j] and newColor will be an integer in [0, 65
 var floodFill = function(image, sr, sc, newColor) {
 
   // captured color at the original pixel
+  let oldColor = image[sr][sc];
+
+  if (oldColor === newColor) return image;
 
   // stack of pixels that need to be changed
+  let pixelsToChange = [[sr, sc]];
+
+  let currentPixel, r, c;
 
   // while there is a stack
+  while (pixelsToChange.length) {
+    [r, c] = pixelsToChange.pop();
+
     // change color at current pixel to the newColor
+    image[r][c] = newColor;
 
     // check above if it is the same as the old color
+    if (image[r - 1] !== undefined && image[r - 1][c] === oldColor) {
       // if it is, add the pixel location to the stack
+      pixelsToChange.push([r - 1, c]);
+    }
 
     // check right if it is the same as the old color
+    if (image[r][c + 1] !== undefined && image[r][c + 1] === oldColor) {
       // if it is, add the pixel location to the stack
+      pixelsToChange.push([r, c + 1]);
+    }
 
     // check down if it is the same as the old color
+    if (image[r + 1] !== undefined && image[r + 1][c] === oldColor) {
       // if it is, add the pixel location to the stack
+      pixelsToChange.push([r + 1, c]);
+    }
 
     // check left if it is the same as the old color
+    if (image[r][c - 1] !== undefined && image[r][c - 1] === oldColor) {
       // if it is, add the pixel location to the stack
+      pixelsToChange.push([r, c - 1]);
+    }
+  }
 
   // return the image
+  return image;
 };
+
+console.log(floodFill([[0,0,0],[0,1,1]], 1, 1, 1));
