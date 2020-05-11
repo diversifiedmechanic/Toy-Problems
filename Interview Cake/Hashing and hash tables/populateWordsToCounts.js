@@ -21,6 +21,7 @@ class WordCloudData {
           || letter === ':'
           || letter === ';'
           || letter === ' '
+          || letter === ','
           || i === inputString.length
         ) && (word !== '')
       ) {
@@ -61,7 +62,6 @@ let desc = 'simple sentence';
 let actual = new WordCloudData('I like cake').wordsToCounts;
 let expected = new Map([['i', 1], ['like', 1], ['cake', 1]]);
 assert(isMapsEqual(actual, expected), desc);
-
 
 desc = 'longer sentence';
 actual = new WordCloudData('Chocolate cake for dinner and pound cake for dessert').wordsToCounts;
