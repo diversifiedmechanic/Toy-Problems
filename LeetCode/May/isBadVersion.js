@@ -37,25 +37,30 @@ var solution = function(isBadVersion) {
    */
   return function(n) {
     // track the left idx
+    let leftIdx = 0;
     // track the right idx
+    let rightIdx = n;
     // define current val
-    // tuple of last known good and last known bad
+    let currentIdx;
 
     // while the there is a value between right and left
+    while(leftIdx < rightIdx - 1) {
       // set the current value as the middle of right and left
+      currentIdx = Math.floor((rightIdx + leftIdx) / 2);
 
       // if the current value is bad
+      if (isBadVersion(currentIdx)) {
         // pull right idx to current idx
-        // set last known bad to current idx
+        rightIdx = currentIdx;
 
       // otherwise
+      } else {
         // set the current left idx to current idx
-        // set the last known good to current idx
-
-      // if last known good and last known bad are one index away
-        // return the value at the last known bad idx
+        leftIdx = currentIdx;
+      }
+    }
 
     // return null
-
+    return rightIdx;
   };
 };
