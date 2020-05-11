@@ -33,6 +33,27 @@ The value of each color in image[i][j] and newColor will be an integer in [0, 65
  * @return {number[][]}
  */
 
+
 var floodFill = function(image, sr, sc, newColor) {
 
+  // captured color at the original pixel
+
+  // stack of pixels that need to be changed
+
+  // while there is a stack
+    // change color at current pixel to the newColor
+
+    // check above if it is the same as the old color
+      // if it is, add the pixel location to the stack
+
+    // check right if it is the same as the old color
+      // if it is, add the pixel location to the stack
+
+    // check down if it is the same as the old color
+      // if it is, add the pixel location to the stack
+
+    // check left if it is the same as the old color
+      // if it is, add the pixel location to the stack
+
+  // return the image
 };
