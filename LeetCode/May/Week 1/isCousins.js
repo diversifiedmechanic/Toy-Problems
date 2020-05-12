@@ -54,7 +54,7 @@ var isCousins = function(root, x, y) {
     let [node, depth] = stack.pop();
 
     // if the current node is x or y
-    if (node.value === (x || y)) {
+    if (node.val === x || node.val === y) {
       // push to found nodes
       foundNodes.push(depth);
 
@@ -71,15 +71,10 @@ var isCousins = function(root, x, y) {
       }
 
       // if the last node on the stack has the same depth as the current node
-      if (stack[stack.length - 1].depth === depth) {
+      if (stack.length && stack[stack.length - 1][1] === depth) {
         // pop off two nodes from the stack
         stack.pop();
-        stack.pop();
-
       // else
-      } else {
-        // pop off one from the stack
-        stack.pop();
       }
     }
 
