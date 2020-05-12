@@ -20,5 +20,20 @@ Output: false
  * @return {boolean}
  */
 var isPerfectSquare = function(num) {
+  // define the number starting at 0
+  let number = 0;
 
+  // while true
+  while (true) {
+    // if the number times itself is the number, return the number
+    if (number * number === num) return true;
+
+    // if it is greater then the number, return false
+    if (number * number > num) return false;
+
+    // add one to the number
+    number++;
+  }
 };
+
+console.log(isPerfectSquare(25))
