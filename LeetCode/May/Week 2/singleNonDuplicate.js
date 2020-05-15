@@ -24,25 +24,25 @@ var singleNonDuplicate = function(nums) {
 
   // while right idx is greater then the left idx
   while (rightIdx > leftIdx) {
-    // find the middle of left and right idx
-    let middle = Math.floor((rightIdx + leftIdx) / 2);
+    // find the middleIdx of left and right idx
+    let middleIdx = Math.floor((rightIdx + leftIdx) / 2);
 
     // var for storing pairs, first is the current idx
-    let pairs = [middle];
+    let pairs = [middleIdx];
 
-    let current = nums[middle];
-    let left = nums[middle - 1];
-    let right = nums[middle + 1];
+    let current = nums[middleIdx];
+    let left = nums[middleIdx - 1];
+    let right = nums[middleIdx + 1];
 
     // if there the pair is the left
     if (current === left) {
       // add pair idx to pairs
-      pairs.unshift(middle - 1);
+      pairs.unshift(middleIdx - 1);
 
     // otherwise if the pair is to the right
     } else if (current === right) {
       // add pair idx to pairs
-      pairs.push(middle + 1);
+      pairs.push(middleIdx + 1);
 
     // else
     } else {
@@ -61,5 +61,8 @@ var singleNonDuplicate = function(nums) {
       leftIdx = pairs[1] + 1;
     }
   }
-
+  return nums[leftIdx];
 };
+
+////////////// Tests ///////////
+console.log(singleNonDuplicate([1,1,2,3,3,4,4,8,8]));
