@@ -27,38 +27,45 @@ Explanation: Remove all the digits from the number and it is left with nothing w
  * @return {string}
  */
 var removeKdigits = function(num, k) {
-  // if the length is less then or equal to k return zero
   if (num.length <= k) return '0';
 
-  // convert the num string to actual number
-  // let number = Number(num);
+  // var for number that comes before a smaller number
+  let larger = 0;
 
-  // while k is greater then zero
-  while (k > 0) {
-    // variable for index removed, resulting in lowest number
-    // let lowestNu
-    let lowestVal =  Number(num);
-
-    // iterate through the string, backwards
-    for (let i = 0; i < num.length; i++) {
-      // convert the sliced out value
-      let current = Number(num.slice(0, i).concat(num.slice(i + 1)));
-
-      // if the current number is lower, replace it
-      if (current < lowestVal) lowestVal = current;
+  let findLarger = () => {
+    // iterate through the string, starting from where the last largest was found
+    for (let i = larger; i < num.length; i++) {
+      if (num[i] > num[i + 1]) return i;
     }
 
-    // set num equal to the num to string
-    num = lowestVal.toString();
-    // subtract one from k
+    // only one item left?
+    return num.length - 1;
+  };
+
+  // while numbers can still be removed
+  while (k > 0) {
+    // find the largest to remove
+    larger = findLarger();
+    // remove the largest
+    num = num.slice(0, larger).concat(num.slice(larger + 1));
+    // decriment to make up for the removed number
+    larger--;
     k--;
   }
 
-  // return num
-  return num;
+  // remove leading zeros
+  let count = 0;
+  while (num[count] === '0') {
+    count++;
+  }
+  num = num.slice(count);
+
+  return num || '0';
 };
 
 ///// Tests ////
-console.log(removeKdigits("1432219", 3));
-console.log(removeKdigits("10200", 1));
-console.log(removeKdigits("10", 2));
+console.log(removeKdigits("1432219", 3) === '1219');
+console.log(removeKdigits("10200", 1) === '200');
+console.log(removeKdigits("10", 2) === '0');
+console.log(removeKdigits("100", 2) === '0');
+console.log(removeKdigits("1010", 2) === '0');
