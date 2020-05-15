@@ -40,9 +40,10 @@ Trie.prototype.insert = function(word) {
 
     // if the current letter exists as a child of the current node
     for (let j = 0; j < node.children.length; j++) {
-      if (node.child[i].val === word[i]) {
+
+      if (node.children[j].val === word[i]) {
         // change the node to the child node
-        node = node.child[i];
+        node = node.children[j];
         // change found child to true
         foundChild = true;
         // break this iteration
@@ -60,7 +61,7 @@ Trie.prototype.insert = function(word) {
   }
 
   // when done iterating add a '.' as a child of the last node
-  node.children.push(new Trie(word['.']));
+  node.children.push(new Trie('.'));
 
   return null;
 };
@@ -72,6 +73,34 @@ Trie.prototype.insert = function(word) {
  */
 Trie.prototype.search = function(word) {
 
+  let node = this;
+
+  word = word.concat('.');
+
+  // iterate through the word
+  for (let i = 0; i < word.length; i++) {
+    let foundChild = false;
+
+    // if the current letter exists as a child of the current node
+    for (let j = 0; j < node.children.length; j++) {
+
+      if (node.children[j].val === word[i]) {
+        // change the node to the child node
+        node = node.children[j];
+        // change found child to true
+        foundChild = true;
+        // break this iteration
+        break;
+        // otherwise
+      }
+    }
+    // if a child was not found
+    if (!foundChild) {
+      return false
+    }
+  }
+
+  return true;
 };
 
 /*
@@ -90,3 +119,9 @@ Trie.prototype.startsWith = function(prefix) {
  * var param_2 = obj.search(word)
  * var param_3 = obj.startsWith(prefix)
  */
+var obj = new Trie();
+obj.insert('hello');
+obj.insert('hell');
+console.log(obj.search('hello' === true));
+console.log(obj.search('hell' === true));
+console.log(obj.search('hel' === false));
