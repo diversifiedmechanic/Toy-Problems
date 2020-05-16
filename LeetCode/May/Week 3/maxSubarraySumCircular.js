@@ -44,22 +44,45 @@ Note:
 
 var maxSubarraySumCircular = function(A) {
   // the max sum so far
+  let max = -Infinity;
   // current sum
+  let currentSum = 0;
   // restart point
+  let restartPoint = 0;
 
   // function -> takes in when to stop iterating
+  let iterate = (stop) {
     // iterate through the array
+    for (let i = 0; i < stop; i++) {
+      // add value to the current sum
+      currentSum += A[i];
       // if the current sum is greater then max sum
+      if (currentSum > max) {
         // replace
+        max = currentSum;
+      }
+
       // if the current sum is less then 0
+      if (currentSum < 0) {
         // set to zero
+        currentSum = 0;
         // if the restart point has not be set
+        if(!restartPoint) {
           // set to current index
+          restartPoint = i;
+        }
+      }
+    }
+  }
 
   // call function to go through whole array
+  iterate(A.length - 1);
 
   // call function to go until the stopping point
+  iterate(restartPoint);
 
   // return the max sum
-
+  return max;
 };
+
+
