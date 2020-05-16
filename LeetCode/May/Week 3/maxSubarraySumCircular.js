@@ -49,6 +49,8 @@ var maxSubarraySumCircular = function(A) {
   let currentSum = 0;
   // restart point
   let restartPoint = 0;
+  // largest negative
+  let largestNegative = 0;
 
   // function -> takes in when to stop iterating
   let iterate = (arr) => {
@@ -57,8 +59,9 @@ var maxSubarraySumCircular = function(A) {
       // add value to the current sum
       currentSum += arr[i];
 
-      if(!restartPoint && (currentSum < max)) {
-
+      // if there is not a reset point and the max value drops
+      if(largestNegative > arr[i]) {
+        largestNegative = arr[i];
         // set to current index
         restartPoint = i;
       }
@@ -76,8 +79,6 @@ var maxSubarraySumCircular = function(A) {
         // if the restart point has not be set
         restartPoint = i;
       }
-
-
     }
   }
 
@@ -86,11 +87,11 @@ var maxSubarraySumCircular = function(A) {
 
   // console.log('max: ', max, 'currentSum: ', currentSum, 'restartPoint: ', restartPoint);
 
+  // reset the sum
   currentSum = 0;
 
   // call function to go until the stopping point
   array = A.slice(restartPoint + 1).concat(A.slice(0, restartPoint + 1));
-  // console.log(array);
   iterate(array);
 
   // return the max sum
@@ -98,9 +99,10 @@ var maxSubarraySumCircular = function(A) {
 };
 
 console.log(maxSubarraySumCircular([1,-2,3,-2]) === 3);
-
-// console.log('return value: ', maxSubarraySumCircular([5,-3,5]));
 console.log(maxSubarraySumCircular([5,-3,5]) === 10);
 console.log(maxSubarraySumCircular([3,-1,2,-1]) === 4);
 console.log(maxSubarraySumCircular([3,-2,2,-3]) === 3);
 console.log(maxSubarraySumCircular([-2,-3,-1]) === -1);
+console.log(maxSubarraySumCircular([-2,5,-1,-4,6,-2]) === 7);
+console.log(maxSubarraySumCircular([-2,5,-3,6,-2]) === 8);
+console.log(maxSubarraySumCircular([-5,-2,5,6,-2,-7,0,2,8]) === 14);
