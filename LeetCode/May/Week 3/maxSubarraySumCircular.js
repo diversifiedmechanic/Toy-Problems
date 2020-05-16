@@ -47,10 +47,14 @@ var maxSubarraySumCircular = function(A) {
   let max = -Infinity;
   // current sum
   let currentSum = 0;
-  // restart point
-  let restartPoint = 0;
-  // largest negative
-  let largestNegative = 0;
+
+  // rolling total
+  let rollingTotal = 0;
+  // index of lowest rolling total
+  let lowestRTidx = 0;
+
+  // lowest rolling total
+  let lowestRollingTotal = Infinity;
 
   // function -> takes in when to stop iterating
   let iterate = (arr) => {
@@ -58,16 +62,19 @@ var maxSubarraySumCircular = function(A) {
     for (let i = 0; i < arr.length; i++) {
       // add value to the current sum
       currentSum += arr[i];
+      rollingTotal += arr[i];
 
       // if there is not a reset point and the max value drops
-      if(largestNegative > arr[i]) {
-        largestNegative = arr[i];
+      if(lowestRollingTotal >= rollingTotal) {
+        lowestRollingTotal = rollingTotal;
+        lowestRTidx = i;
         // set to current index
-        restartPoint = i;
+        // restartPoint = i;
       }
 
       // if the current sum is greater then max sum
       if (currentSum > max) {
+        rollingTotal = 0;
         // replace
         max = currentSum;
       }
@@ -85,13 +92,13 @@ var maxSubarraySumCircular = function(A) {
   // call function to go through whole array
   iterate( A);
 
-  // console.log('max: ', max, 'currentSum: ', currentSum, 'restartPoint: ', restartPoint);
+  // console.log('max: ', max, 'currentSum: ', currentSum, 'restartPoint: ', lowestRTidx);
 
   // reset the sum
   currentSum = 0;
 
   // call function to go until the stopping point
-  array = A.slice(restartPoint + 1).concat(A.slice(0, restartPoint + 1));
+  array = A.slice(lowestRTidx).concat(A.slice(0, lowestRTidx));
   iterate(array);
 
   // return the max sum
@@ -106,3 +113,5 @@ console.log(maxSubarraySumCircular([-2,-3,-1]) === -1);
 console.log(maxSubarraySumCircular([-2,5,-1,-4,6,-2]) === 7);
 console.log(maxSubarraySumCircular([-2,5,-3,6,-2]) === 8);
 console.log(maxSubarraySumCircular([-5,-2,5,6,-2,-7,0,2,8]) === 14);
+console.log(maxSubarraySumCircular([-9,14,24,-14,12,18,-18,-10,-10,-23,-2,-23,11,12,18,-9,9,-29,12,4,-8,15,11,-12,-16,-9,19,-12,22,16]) === 99);
+// console.log([-9,14,24,-14,12,18,-18,-10,-10,-23,-2,-23,11,12,18,-9,9,-29,12,4,-8,15,11,-12,-16,-9,19,-12,22,16][17]);
