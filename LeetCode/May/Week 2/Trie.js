@@ -109,7 +109,32 @@ Trie.prototype.search = function(word) {
  * @return {boolean}
  */
 Trie.prototype.startsWith = function(prefix) {
+  let node = this;
 
+  // iterate through the word
+  for (let i = 0; i < prefix.length; i++) {
+    let foundChild = false;
+
+    // if the current letter exists as a child of the current node
+    for (let j = 0; j < node.children.length; j++) {
+
+      if (node.children[j].val === prefix[i]) {
+        // change the node to the child node
+        node = node.children[j];
+        // change found child to true
+        foundChild = true;
+        // break this iteration
+        break;
+        // otherwise
+      }
+    }
+    // if a child was not found
+    if (!foundChild) {
+      return false
+    }
+  }
+
+  return true;
 };
 
 /**
@@ -122,6 +147,8 @@ Trie.prototype.startsWith = function(prefix) {
 var obj = new Trie();
 obj.insert('hello');
 obj.insert('hell');
-console.log(obj.search('hello' === true));
-console.log(obj.search('hell' === true));
-console.log(obj.search('hel' === false));
+console.log(obj.search('hello') === true);
+console.log(obj.search('hell') === true);
+console.log(obj.search('hel') === false);
+console.log(obj.search('apple') === false);
+console.log(obj.startsWith('hel') === true);
