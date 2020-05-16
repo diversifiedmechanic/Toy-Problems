@@ -43,7 +43,7 @@ Note:
  */
 
 /*
-Find the linear maximum subarray sum using the helper function maxSubarraySum
+Find the linear maximum subarray sum 
 Find the total sum of the array
 Find the minimum contiguous subarray sum by inverting the sign of each num
 The maximum circular subarray sum can be found by removing the minimum contiguous subarray sum from the total
