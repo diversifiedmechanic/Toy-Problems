@@ -22,5 +22,20 @@ Note:
  */
 
 var checkInclusion = function(s1, s2) {
+  // store s1 in an object
 
+  // iterate through the string
+    // if the current letter is in the obj
+      // copy the object of letters
+      // while the letter exists in the obj
+        // subtract one from the letter count
+        // if the letter count becomes 0
+          // delete the letter from the obj
+
+        // if the object has run out of letters
+          // return true
+        // increment index by one
+      // current letter = index from while loop
+
+  return false;
 };
