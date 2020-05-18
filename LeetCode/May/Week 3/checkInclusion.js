@@ -35,6 +35,7 @@ var checkInclusion = function(s1, s2) {
 
   // iterate through the second string
   for (let i = 0; i < s2.length; i++) {
+    console.log('in iteraction: ', i, 'store: ', store);
     // if the current letter is in the obj
     if (store[s2[i]]) {
       // copy the object of letters
@@ -42,14 +43,14 @@ var checkInclusion = function(s1, s2) {
       let idx = i;
 
       // while the letter exists in the obj
-      while (storeCopy[s2[i]] !== undefined) {
+      while (storeCopy[s2[idx]] !== undefined) {
         // subtract one from the letter count
-        storeCopy[s2[i]] -= 1;
+        storeCopy[s2[idx]] -= 1;
 
         // if the letter count becomes 0
-        if (storeCopy[s2[i]] === 0) {
+        if (storeCopy[s2[idx]] === 0) {
           // delete the letter from the obj
-          delete storeCopy[s2[i]];
+          delete storeCopy[s2[idx]];
         }
 
         // if the object has run out of letters
@@ -63,11 +64,12 @@ var checkInclusion = function(s1, s2) {
       }
 
       // current letter = index from while loop
-      i = idx;
     }
   }
 
   return false;
 };
 
-
+console.log(checkInclusion('ab', 'eidbaooo'));
+console.log(checkInclusion('ab', 'eidboaoo'));
+console.log(checkInclusion('adc', 'dcda'));
