@@ -42,13 +42,30 @@ var oddEvenList = function(head) {
   // set current to the third node
   let current = head.next.next;
 
-  // while there is a current node
-    // create a temp that is equal to the current node's next node
-    // set the current node's next to the lastOdd.next
-    // set the last odd's next to the last even's next
-    // set the last even's next to the node stored in temp
-    // move last even and last odd to their next node
-    // set the current node to last even's next node
+  let h = head;
 
+  // while there is a current node
+  while (current) {
+    // create a temp that is equal to the current node's next node
+    let temp = current.next;
+
+    // set the current node's next to the lastOdd.next
+    current.next = lastEven.next;
+
+    // set the last odd's next to the last even's next
+    lastOdd.next = lastEven.next;
+
+    // set the last even's next to the node stored in temp
+    lastEven.next = temp;
+
+    // move last even and last odd to their next node
+    lastEven = lastEven.next;
+    lastOdd = lastOdd.next;
+
+    // set the current node to last even's next node
+    current = current.next;
+  }
+
+  return h;
 
 };
