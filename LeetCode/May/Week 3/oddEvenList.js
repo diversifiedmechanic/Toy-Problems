@@ -29,5 +29,26 @@ Note:
  * @return {ListNode}
  */
 var oddEvenList = function(head) {
+  // if there isn't a first second and third node
+  if (!head || !head.next || !head.next.next) {
+    // return the head
+    return head;
+  }
+
+  // set last odd to the first node
+  let lastOdd = head;
+  // set last even to the second node
+  let lastEven = head.next;
+  // set current to the third node
+  let current = head.next.next;
+
+  // while there is a current node
+    // create a temp that is equal to the current node's next node
+    // set the current node's next to the lastOdd.next
+    // set the last odd's next to the last even's next
+    // set the last even's next to the node stored in temp
+    // move last even and last odd to their next node
+    // set the current node to last even's next node
+
 
 };
