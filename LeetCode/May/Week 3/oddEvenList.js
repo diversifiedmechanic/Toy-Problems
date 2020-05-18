@@ -37,6 +37,8 @@ var oddEvenList = function(head) {
 
   // set last odd to the first node
   let lastOdd = head;
+
+  let firstEven = head.next;
   // set last even to the second node
   let lastEven = head.next;
   // set current to the third node
@@ -50,7 +52,7 @@ var oddEvenList = function(head) {
     let temp = current.next;
 
     // set the current node's next to the lastOdd.next
-    current.next = lastEven.next;
+    current.next = lastOdd.next;
 
     // set the last odd's next to the last even's next
     lastOdd.next = lastEven.next;
@@ -63,9 +65,8 @@ var oddEvenList = function(head) {
     lastOdd = lastOdd.next;
 
     // set the current node to last even's next node
-    current = current.next;
+    current = lastEven ? lastEven.next : null;
   }
 
   return h;
-
 };
