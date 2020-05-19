@@ -42,7 +42,10 @@ StockSpanner.prototype.next = function(price) {
   this.span.push(price);
   let count = 0;
 
-  for (let i = this.span.length - 1; i > 0; i++) {
+  console.log('span length: ', this.span.length);
+
+  for (let i = this.span.length - 1; i >= 0; i--) {
+    console.log('i ', i);
     if (this.span[i] <= price) {
       count += 1;
     } else {
@@ -52,6 +55,20 @@ StockSpanner.prototype.next = function(price) {
 
   return count;
 };
+
+var obj = new StockSpanner();
+var result = [];
+
+result.push(obj.next(100));
+result.push(obj.next(80));
+result.push(obj.next(60));
+result.push(obj.next(70));
+result.push(obj.next(60));
+result.push(obj.next(75));
+result.push(obj.next(80));
+
+console.log(JSON.stringify(result) === JSON.stringify([1, 1, 1, 2, 1, 4, 6]));
+
 
 /*
  * Your StockSpanner object will be instantiated and called as such:
