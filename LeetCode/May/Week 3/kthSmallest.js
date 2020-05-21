@@ -99,6 +99,8 @@ var kthSmallest = function(root, k) {
   }
 };
 
+////////// TESTS /////////
+
 function Tree(val, left = null, right = null) {
   this.left = left;
   this.right = right;
@@ -109,5 +111,13 @@ var tree = new Tree(3);
 tree.left = new Tree(1);
 tree.left.right = new Tree(2);
 tree.right = new Tree(4);
+console.log(kthSmallest(tree, 1) === 1);
+console.log(kthSmallest(tree, 2) === 2);
 
-console.log(kthSmallest(tree, 1));
+var tree = new Tree(5);
+tree.left = new Tree(3);
+tree.left.right = new Tree(4);
+tree.left.left = new Tree(2);
+tree.left.left.left = new Tree(1);
+tree.right = new Tree(6);
+console.log(kthSmallest(tree, 3) === 3);
