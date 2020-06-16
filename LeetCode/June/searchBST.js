@@ -41,22 +41,22 @@ var searchBST = function(root, val) {
   if (val > root.val) {
     // if there is a value to the right move right
     // otherwise, return an empty tree
-    return root.left
-    ? searchBST(root.left, val)
-    : [];
+    return root.right
+    ? searchBST(root.right, val)
+    : null;
   // otherwise
   } else {
     // if there is a value to the right move left
     // otherwise, return an empty tree
-    return root.right
-    ? searchBST(root.right, val)
-    : [];
+    return root.left
+    ? searchBST(root.left, val)
+    : null;
   }
 };
 
 
 ////////////// TESTS //////////////
-class TreeNode() {
+class TreeNode {
   constructor(val, left, right) {
     this.val = val;
     this.left = (left === undefined ? null : left);
@@ -70,4 +70,5 @@ A.left.left = new TreeNode(1);
 A.left.right = new TreeNode(3);
 A.right = new TreeNode(7);
 
-console.log(searchBST(A), 2);
+console.log(searchBST(A, 2));
+console.log(searchBST(A, 5));
