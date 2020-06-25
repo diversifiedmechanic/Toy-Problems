@@ -41,7 +41,6 @@ var combinationSum = function(candidates, target) {
 
   let buildCombinations = (idx, combination, combinationTotal) => {
     if (combinationTotal === target) return result.push(combination);
-    // if (combinationTotal > target) return;
 
     for (let i = idx; i < sorted.length; i++) {
       if (combinationTotal + sorted[i] <= target) {
@@ -50,7 +49,13 @@ var combinationSum = function(candidates, target) {
     }
   }
 
-  buildCombinations(0, [])
+  buildCombinations(0, [], 0)
 
   return result;
 };
+
+/////////////////// TESTS ////////////////////
+
+console.log(JSON.stringify(combinationSum([2,3,6,7], 7)) === JSON.stringify([[7], [3,2,2]]));
+console.log(combinationSum([2,3,5], 8));
+console.log(JSON.stringify(combinationSum([2,3,5], 8)) === JSON.stringify([[5,3], [3,3,2], [2,2,2,2]]));
