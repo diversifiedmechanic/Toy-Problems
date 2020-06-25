@@ -44,9 +44,10 @@ var combinationSum = function(candidates, target) {
     // if (combinationTotal > target) return;
 
     for (let i = idx; i < sorted.length; i++) {
-      if (combinationTotal + sorted[i] <= target)
+      if (combinationTotal + sorted[i] <= target) {
+        buildCombinations(i, combination.concat(sorted[i]), combinationTotal + sorted[i]);
+      }
     }
-
   }
 
   buildCombinations(0, [])
