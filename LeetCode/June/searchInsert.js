@@ -47,7 +47,7 @@ var searchInsert = function(nums, target) {
     if (middleIdx - 1 < 0) {
       return 0;
     } else {
-      return middleIdx - 1;
+      return middleIdx;
     }
   }
 };
@@ -68,3 +68,4 @@ console.log(searchInsert([1,3,5,6], 0) === 0);
 
 // should be able to handle small input arrays
 console.log(searchInsert([1,3], 0) === 0);
+console.log(searchInsert([1,3], 2) === 1);
