@@ -1,7 +1,5 @@
 /*
-Given a sorted array and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
-
-You may assume no duplicates in the array.
+Given a sorted array and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order. You may assume no duplicates in the array.
 
 Example 1:
 Input: [1,3,5,6], 5
@@ -21,11 +19,28 @@ Output: 0
 */
 
 /*
- * @param {number[]} nums
- * @param {number} target
- * @return {number}
- */
+* @param {number[]} nums
+* @param {number} target
+* @return {number}
+*/
 
 var searchInsert = function(nums, target) {
+  let rightIdx = nums.length - 1;
+  let leftIdx = 0;
 
+  while (rightIdx - leftIdx >= 0) {
+    let middleIdx = Math.floor((leftIdx + rightIdx) / 2);
+
+    if (nums[middleIdx] === target) return middleIdx;
+
+    if (rightIdx - leftIdx === 0) {
+      return target > nums[middleIdx] ? middleIdx + 1 : middleIdx - 1;
+    }
+
+    if (target > nums[middleIdx]) {
+      leftIdx = middleIdx + 1;
+    } else {
+      rightIdx = middleIdx - 1;
+    }
+  }
 };
