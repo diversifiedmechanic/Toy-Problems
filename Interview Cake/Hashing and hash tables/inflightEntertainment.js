@@ -11,22 +11,39 @@ When building your function:
   Optimize for runtime over memory
 */
 
+// function canTwoMoviesFillFlight(movieLengths, flightLength) {
+//   let store = {};
+
+//   for (movie of movieLengths) {
+//     store[movie] = store[movie] + 1 || 1;
+//   }
+
+//   for (movie of movieLengths) {
+//     if (flightLength - movie === movie && store[movie] === 1) return false;
+//     if (store[flightLength - movie]) return true;
+//   }
+
+//   return false;
+// }
+
 function canTwoMoviesFillFlight(movieLengths, flightLength) {
-  let store = {};
+  let store = new Set();
 
   for (movie of movieLengths) {
-    store[movie] = store[movie] + 1 || 1;
-  }
-
-  for (movie of movieLengths) {
-    if (flightLength - movie === movie && store[movie] === 1) return false;
-    if (store[flightLength - movie]) return true;
+    if (store.has(flightLength - movie)) return true;
+    store.add(movie);
   }
 
   return false;
 }
 
 //////////////// TESTS ///////////////
+
+// should return false if no movies are passed in
+console.log(canTwoMoviesFillFlight([], 3) === false);
+
+// should return false if only one movie is passed in
+console.log(canTwoMoviesFillFlight([2], 2) === false);
 
 // should return true when there are complimentary movie lengths
 console.log(canTwoMoviesFillFlight([2, 5, 1, 6, 10], 3) === true);
