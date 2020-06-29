@@ -27,28 +27,27 @@ Output: 0
 var searchInsert = function(nums, target) {
   let rightIdx = nums.length - 1;
   let leftIdx = 0;
+  let middleIdx;
 
   while (rightIdx - leftIdx >= 0) {
-    let middleIdx = Math.floor((leftIdx + rightIdx) / 2);
+    middleIdx = Math.floor((leftIdx + rightIdx) / 2);
 
     if (nums[middleIdx] === target) return middleIdx;
-
-    if (rightIdx - leftIdx === 0) {
-      if (target > nums[middleIdx]) {
-        return middleIdx + 1;
-      } else {
-        if (middleIdx - 1 < 0) {
-          return 0;
-        } else {
-          return middleIdx - 1;
-        }
-      }
-    }
 
     if (target > nums[middleIdx]) {
       leftIdx = middleIdx + 1;
     } else {
       rightIdx = middleIdx - 1;
+    }
+  }
+
+  if (target > nums[middleIdx]) {
+    return middleIdx + 1;
+  } else {
+    if (middleIdx - 1 < 0) {
+      return 0;
+    } else {
+      return middleIdx - 1;
     }
   }
 };
@@ -66,3 +65,6 @@ console.log(searchInsert([1,3,5,6], 7) === 4);
 
 // should be able to return insert index at the start of the array
 console.log(searchInsert([1,3,5,6], 0) === 0);
+
+// should be able to handle small input arrays
+console.log(searchInsert([1,3], 0) === 0);
