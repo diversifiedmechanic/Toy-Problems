@@ -15,12 +15,27 @@ function canTwoMoviesFillFlight(movieLengths, flightLength) {
   let store = {};
 
   for (movie of movieLengths) {
-    store[movie] = true;
+    store[movie] = store[movie] + 1 || 1;
   }
 
   for (movie of movieLengths) {
+    if (flightLength - movie === movie && store[movie] === 1) return false;
     if (store[flightLength - movie]) return true;
   }
 
   return false;
 }
+
+//////////////// TESTS ///////////////
+
+// should return true when there are complimentary movie lengths
+console.log(canTwoMoviesFillFlight([2, 5, 1, 6, 10], 3) === true);
+
+// should return false if a combination cannot be found
+console.log(canTwoMoviesFillFlight([2, 5, 1, 6, 10], 2) === false);
+
+// should return true if there are two movies that are half of the flight
+console.log(canTwoMoviesFillFlight([2, 5, 1, 5, 6, 10], 10) === true);
+
+// should not allow the same movie to be used more than once
+console.log(canTwoMoviesFillFlight([2, 5, 1, 6, 10], 10) === false);
