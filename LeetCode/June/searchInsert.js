@@ -34,7 +34,15 @@ var searchInsert = function(nums, target) {
     if (nums[middleIdx] === target) return middleIdx;
 
     if (rightIdx - leftIdx === 0) {
-      return target > nums[middleIdx] ? middleIdx + 1 : middleIdx - 1;
+      if (target > nums[middleIdx]) {
+        return middleIdx + 1;
+      } else {
+        if (middleIdx - 1 < 0) {
+          return 0;
+        } else {
+          return middleIdx - 1;
+        }
+      }
     }
 
     if (target > nums[middleIdx]) {
@@ -44,3 +52,17 @@ var searchInsert = function(nums, target) {
     }
   }
 };
+
+//////////////////// TESTS ///////////////////////
+
+// should return the index of the number, if present
+console.log(searchInsert([1,3,5,6], 5) === 2);
+
+// should return the index the number would be inserted, if not present
+console.log(searchInsert([1,3,5,6], 2) === 1);
+
+// should be able to return index greater then the end of the original array
+console.log(searchInsert([1,3,5,6], 7) === 4);
+
+// should be able to return insert index at the start of the array
+console.log(searchInsert([1,3,5,6], 0) === 0);
