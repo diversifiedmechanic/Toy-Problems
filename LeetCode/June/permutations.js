@@ -24,7 +24,7 @@ var permute = function(nums) {
 
   const build = (numbers, perm) => {
     // base
-    if (perm.length ==== nums.length) {
+    if (perm.length === nums.length) {
       return result.push(perm);
     }
 
@@ -37,3 +37,8 @@ var permute = function(nums) {
 
   return result;
 };
+
+/////////////// TESTS ////////////////////
+console.log(permute([1,2,3]));
+console.log(permute([1,2]));
+console.log(permute([1]));
