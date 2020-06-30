@@ -20,5 +20,20 @@ Output:
  */
 
 var permute = function(nums) {
+  const result = [];
 
+  const build = (numbers, perm) => {
+    // base
+    if (perm.length ==== nums.length) {
+      return result.push(perm);
+    }
+
+    for (let i = 0; i < numbers.length; i++) {
+      build(numbers.slice(0, i).concat(numbers.slice(i + 1)), perm.concat(numbers[i]));
+    }
+  }
+
+  build(nums, []);
+
+  return result;
 };
