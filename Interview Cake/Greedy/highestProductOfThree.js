@@ -4,6 +4,7 @@ The input arrayOfInts will always have at least three integers.
 */
 
 function highestProductOf3(arrayOfInts) {
+  if (arrayOfInts.length < 3) throw new Error('Not enough numbers!');
   let positiveThree = [];
   let negativeTwo = [];
 
