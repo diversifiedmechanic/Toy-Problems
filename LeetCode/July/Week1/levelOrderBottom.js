@@ -33,6 +33,7 @@ return its bottom-up level order traversal as:
  * @return {number[][]}
  */
 var levelOrderBottom = function(root) {
+  if (!root) return [];
   let result = [];
 
   let stack = [[root, 0]];
@@ -44,9 +45,33 @@ var levelOrderBottom = function(root) {
     ? result[depth] = [node.val]
     : result[depth].push(node.val);
 
-    if (node.left !== null) stack.push([node.left, depth + 1]);
     if (node.right !== null) stack.push([node.right, depth + 1]);
+    if (node.left !== null) stack.push([node.left, depth + 1]);
   }
 
   return result.reverse();
 };
+
+//////////////// TESTS //////////////////
+
+class TreeNode {
+  constructor(val, left, right) {
+    this.val = val || null;
+    this.left = left || null;
+    this.right = right || null;
+  }
+}
+
+let A = new TreeNode(3);
+A.left = new TreeNode(9);
+A.right = new TreeNode(20);
+A.right.left = new TreeNode(15);
+A.right.right = new TreeNode(7);
+
+console.log(levelOrderBottom(A));
+
+console.log(JSON.stringify(levelOrderBottom(A)) === JSON.stringify([
+  [15,7],
+  [9,20],
+  [3]
+]));
