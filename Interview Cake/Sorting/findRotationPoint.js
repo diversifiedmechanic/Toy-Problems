@@ -28,6 +28,18 @@ function findRotationPoint(words) {
   let middleIdx;
 
   while (rightIdx - leftIdx >= 0) {
+    middleIdx = Math.floor((leftIdx + rightIdx) / 2);
 
+    if (words[middleIdx] > words[middleIdx + 1] || words[middleIdx] < words[middleIdx - 1]) {
+      return words[middleIdx + 1];
+    }
+
+    if (words[middleIdx] > words[leftIdx]) {
+      leftIdx = middleIdx + 1
+    } else {
+      rightIdx = middleIdx - 1;
+    }
   }
 };
+
+
