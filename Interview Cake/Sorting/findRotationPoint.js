@@ -27,11 +27,14 @@ function findRotationPoint(words) {
   let rightIdx = words.length - 1;
   let middleIdx;
 
-  while (rightIdx - leftIdx >= 0) {
+  while (rightIdx > leftIdx) {
     middleIdx = Math.floor((leftIdx + rightIdx) / 2);
 
-    if (words[middleIdx] > words[middleIdx + 1] || words[middleIdx] < words[middleIdx - 1]) {
-      return words[middleIdx + 1];
+    if (words[middleIdx] > words[middleIdx + 1]) {
+      return middleIdx + 1;
+    }
+    if (words[middleIdx] < words[middleIdx - 1]) {
+      return middleIdx;
     }
 
     if (words[middleIdx] > words[leftIdx]) {
@@ -42,4 +45,27 @@ function findRotationPoint(words) {
   }
 };
 
+/////////////// TESTS ///////////////
+var words = [
+  'ptolemaic',
+  'retrograde',
+  'supplant',
+  'undulate',
+  'xenoepist',
+  'asymptote',  // <-- rotates here!
+  'babka',
+  'banoffee',
+  'engender',
+  'karpatka',
+  'othellolagkage',
+];
 
+console.log(findRotationPoint(words) === 5);
+
+words = [
+  'drive',
+  'sam',
+  'cat',
+];
+
+console.log(findRotationPoint(words) === 2);
