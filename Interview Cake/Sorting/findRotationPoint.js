@@ -22,27 +22,47 @@ Now I have an array of words that are mostly alphabetical, except they start som
 Write a function for finding the index of the "rotation point," which is where I started working from the beginning of the dictionary. This array is huge (there are lots of words I don't know) so we want to be efficient here.
 */
 
+// first attempt
+// function findRotationPoint(words) {
+//   let leftIdx = 0;
+//   let rightIdx = words.length - 1;
+//   let middleIdx;
+
+//   while (rightIdx > leftIdx) {
+//     middleIdx = Math.floor((leftIdx + rightIdx) / 2);
+
+//     if (words[middleIdx] > words[middleIdx + 1]) {
+//       return middleIdx + 1;
+//     }
+//     if (words[middleIdx] < words[middleIdx - 1]) {
+//       return middleIdx;
+//     }
+
+//     if (words[middleIdx] > words[leftIdx]) {
+//       leftIdx = middleIdx + 1
+//     } else {
+//       rightIdx = middleIdx - 1;
+//     }
+//   }
+// };
+
+// second pass at cleaner code
 function findRotationPoint(words) {
   let leftIdx = 0;
   let rightIdx = words.length - 1;
   let middleIdx;
 
-  while (rightIdx > leftIdx) {
+  while (rightIdx > leftIdx + 1) {
     middleIdx = Math.floor((leftIdx + rightIdx) / 2);
 
-    if (words[middleIdx] > words[middleIdx + 1]) {
-      return middleIdx + 1;
-    }
-    if (words[middleIdx] < words[middleIdx - 1]) {
-      return middleIdx;
-    }
-
-    if (words[middleIdx] > words[leftIdx]) {
-      leftIdx = middleIdx + 1
+    if (words[middleIdx] >= words[0]) {
+      leftIdx = middleIdx;
     } else {
-      rightIdx = middleIdx - 1;
+      rightIdx = middleIdx;
     }
   }
+
+  return rightIdx;
 };
 
 /////////////// TESTS ///////////////
