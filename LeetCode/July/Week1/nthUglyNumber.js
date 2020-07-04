@@ -32,10 +32,8 @@ var nthUglyNumber = function(n) {
 
     uglyNumbers[count] = Math.min(
       uglyNumbers[twos] * 2,
-      Math.min(
-        uglyNumbers[threes] * 3,
-        uglyNumbers[fives] * 5,
-      )
+      uglyNumbers[threes] * 3,
+      uglyNumbers[fives] * 5,
     );
 
 
