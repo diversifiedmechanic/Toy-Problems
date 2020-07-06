@@ -29,11 +29,30 @@ var plusOne = function(digits) {
 
     if (digits[i] > 9) {
       digits[i] = 0;
-      carry = true;
     } else {
+      carry = false;
       break;
     }
   }
 
+  if (carry) digits.unshift(1);
+
   return digits;
 };
+
+///////////////////// TESTS ///////////////
+
+// should add one to an array of one digit
+console.log(JSON.stringify(plusOne([1])) === JSON.stringify([2]));
+
+// should add one to zero
+console.log(JSON.stringify(plusOne([0])) === JSON.stringify([1]));
+
+// should add one to an array with no carry over
+console.log(JSON.stringify(plusOne([1,2,3])) === JSON.stringify([1,2,4]));
+
+// should be able to carry over
+console.log(JSON.stringify(plusOne([1,2,9])) === JSON.stringify([1,3,0]));
+
+// should be able to add to the front of the array if needed
+console.log(JSON.stringify(plusOne([9,9,9])) === JSON.stringify([1,0,0,0]));
