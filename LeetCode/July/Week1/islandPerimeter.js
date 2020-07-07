@@ -25,53 +25,26 @@ var findEdges = function(i, j, grid, minusEdge = 0) {
 
   let count = 4 - minusEdge;
 
-  // up
   if (grid[i + 1] && grid[i + 1][j] === 1) {
-    count -= 1;
+    count += findEdges(i + 1, j, grid, 1) - 1;
   }
 
-  // down
   if (grid[i - 1] && grid[i - 1][j] === 1) {
-    count -= 1;
+    count += findEdges(i - 1, j, grid, 1) - 1;
   }
 
-  // left
   if (grid[i][j + 1] === 1) {
-    count -= 1;
+    count += findEdges(i, j + 1, grid, 1) - 1;
   }
 
-  // right
   if (grid[i][j - 1] === 1) {
-    count -= 1;
+    count += findEdges(i, j - 1, grid, 1) - 1;
   }
 
-  // up
-  if (grid[i + 1] && grid[i + 1][j] === 1) {
-    count += findEdges(i + 1, j, grid, 1);
-  }
-
-  // down
-  if (grid[i - 1] && grid[i - 1][j] === 1) {
-    count += findEdges(i - 1, j, grid, 1);
-  }
-
-  // left
-  if (grid[i][j + 1] === 1) {
-    count += findEdges(i, j + 1, grid, 1);
-  }
-
-  // right
-  if (grid[i][j - 1] === 1) {
-    count += findEdges(i, j - 1, grid, 1);
-  }
-
-  console.log(count);
   return count;
 };
 
 var islandPerimeter = function(grid) {
-  let i = 0;
-
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[0].length; j++) {
       if (grid[i][j] === 1) return findEdges(i, j, grid);
@@ -80,23 +53,23 @@ var islandPerimeter = function(grid) {
 };
 
 ////////////// TESTS ////////////////
-// var cells = [[1]];
+var cells = [[1]];
 
-// // should find all 4 sides of a single island
-// console.log(islandPerimeter(cells) === 4);
+// should find all 4 sides of a single island
+console.log(islandPerimeter(cells) === 4);
 
-// var cells = [[0,1],
-//              [0,1]];
+var cells = [[0,1],
+             [0,1]];
 
-// // should find all 6 sides of a two islands connected
-// console.log(islandPerimeter(cells) === 6);
+// should find all 6 sides of a two islands connected
+console.log(islandPerimeter(cells) === 6);
 
-// var cells = [[0,1,0],
-//              [0,1,0],
-//              [0,1,0]];
+var cells = [[0,1,0],
+             [0,1,0],
+             [0,1,0]];
 
-// // should find all 8 sides of a three islands connected
-// console.log(islandPerimeter(cells) === 8);
+// should find all 8 sides of a three islands connected
+console.log(islandPerimeter(cells) === 8);
 
 var cells = [[0,1,0],
              [0,1,0],
