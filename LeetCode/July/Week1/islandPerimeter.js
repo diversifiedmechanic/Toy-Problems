@@ -20,44 +20,96 @@ Output: 16
 * @return {number}
 */
 
-var findEdges = function(i, j, grid) {
+var findEdges = function(i, j, grid, minusEdge = 0) {
   grid[i][j] = 0;
-  let count = 4;
+
+  let count = 4 - minusEdge;
 
   // up
   if (grid[i + 1] && grid[i + 1][j] === 1) {
     count -= 1;
-    findEdges(i + 1, j, grid);
   }
 
   // down
   if (grid[i - 1] && grid[i - 1][j] === 1) {
     count -= 1;
-    findEdges(i - 1, j, grid);
   }
 
   // left
   if (grid[i][j + 1] === 1) {
     count -= 1;
-    findEdges(i, j + 1, grid);
   }
 
   // right
   if (grid[i][j - 1] === 1) {
     count -= 1;
-    findEdges(i, j - 1, grid);
   }
+
+  // up
+  if (grid[i + 1] && grid[i + 1][j] === 1) {
+    count += findEdges(i + 1, j, grid, 1);
+  }
+
+  // down
+  if (grid[i - 1] && grid[i - 1][j] === 1) {
+    count += findEdges(i - 1, j, grid, 1);
+  }
+
+  // left
+  if (grid[i][j + 1] === 1) {
+    count += findEdges(i, j + 1, grid, 1);
+  }
+
+  // right
+  if (grid[i][j - 1] === 1) {
+    count += findEdges(i, j - 1, grid, 1);
+  }
+
+  console.log(count);
+  return count;
 };
 
 var islandPerimeter = function(grid) {
-  let islandFound = false;
   let i = 0;
 
-  while (!islandFound) {
+  for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[0].length; j++) {
       if (grid[i][j] === 1) return findEdges(i, j, grid);
     }
-
-    i += 1;
   }
 };
+
+////////////// TESTS ////////////////
+// var cells = [[1]];
+
+// // should find all 4 sides of a single island
+// console.log(islandPerimeter(cells) === 4);
+
+// var cells = [[0,1],
+//              [0,1]];
+
+// // should find all 6 sides of a two islands connected
+// console.log(islandPerimeter(cells) === 6);
+
+// var cells = [[0,1,0],
+//              [0,1,0],
+//              [0,1,0]];
+
+// // should find all 8 sides of a three islands connected
+// console.log(islandPerimeter(cells) === 8);
+
+var cells = [[0,1,0],
+             [0,1,0],
+             [1,1,0]];
+
+// should find all 10 sides of a three islands connected
+console.log(islandPerimeter(cells) === 10);
+
+
+cells = [[0,1,0,0],
+         [1,1,1,0],
+         [0,1,0,0],
+         [1,1,0,0]];
+
+// should handle more complicated shapes
+console.log(islandPerimeter(cells) === 16);
