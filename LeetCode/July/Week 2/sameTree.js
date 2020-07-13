@@ -44,25 +44,28 @@ var isSameTree = function(p, q) {
   let pStack = [p];
   let qStack = [q];
 
-  while (pStack) {
+  while (pStack.length) {
     let pEl = pStack.pop();
     let qEl = qStack.pop();
 
-    console.log(pEl);
-    if (pEl.val !== qEl.val) {
+    // console.log(pEl);
+    if (qEl === null || pEl === null || pEl.val !== qEl.val) {
+      if (qEl === null && pEl === null) continue;
       return false;
     }
 
-    if (pEl.left !== null) {
-      pStak.push(pEl.left);
-      qStak.push(qEl.left);
+    if (pEl.left !== null || qEl.left !== null) {
+      pStack.push(pEl.left);
+      qStack.push(qEl.left);
     }
 
-    if (pEl.right !== null) {
-      pStak.push(pEl.right);
-      qStak.push(qEl.right);
+    if (pEl.right !== null || qEl.right !== null) {
+      pStack.push(pEl.right);
+      qStack.push(qEl.right);
     }
   }
 
   return true;
 };
+
+////////////// TESTS ///////////
