@@ -48,7 +48,6 @@ var isSameTree = function(p, q) {
     let pEl = pStack.pop();
     let qEl = qStack.pop();
 
-    // console.log(pEl);
     if (qEl === null || pEl === null || pEl.val !== qEl.val) {
       if (qEl === null && pEl === null) continue;
       return false;
@@ -67,5 +66,3 @@ var isSameTree = function(p, q) {
 
   return true;
 };
-
-////////////// TESTS ///////////
