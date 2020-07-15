@@ -28,15 +28,23 @@ Note:
 
 var reverseWords = function(s) {
   let reverse = '';
+  let currentWord = ' ';
 
   for (let i = s.length - 1; i >= 0; i--) {
-    let currentWord = '';
-    if (s[i] === ' ' && reverse[reverse.length - 1] !== ' ') {
-      reverse += currentWord + ' ';
+
+    if (s[i] === ' ' && currentWord !== ' ') {
+      reverse += currentWord;
+      currentWord = ' ';
     } else if (s[i] !== ' ') {
-      currentWord = s[i].concat(currentWord);
+      currentWord = s[i] + currentWord;
     }
   }
 
-  return reverse;
+  if (currentWord.length > 1) reverse += currentWord;
+
+  return reverse.trim();
 };
+
+////////////// TESTS //////////////
+
+console.log(reverseWords('the sky is blue'));
