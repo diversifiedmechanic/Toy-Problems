@@ -47,4 +47,11 @@ var reverseWords = function(s) {
 
 ////////////// TESTS //////////////
 
-console.log(reverseWords('the sky is blue'));
+// should work on a normal sentence
+console.log(reverseWords('the sky is blue') === 'blue is sky the');
+
+// should only place one space between words
+console.log(reverseWords('  hello world!  ') === 'world! hello');
+
+// should reduce multiple spaces to one
+console.log(reverseWords('a good    example') === 'example good a');
