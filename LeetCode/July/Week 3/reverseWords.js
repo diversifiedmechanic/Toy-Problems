@@ -27,5 +27,16 @@ Note:
 */
 
 var reverseWords = function(s) {
+  let reverse = '';
 
+  for (let i = s.length - 1; i >= 0; i--) {
+    let currentWord = '';
+    if (s[i] === ' ' && reverse[reverse.length - 1] !== ' ') {
+      reverse += currentWord + ' ';
+    } else if (s[i] !== ' ') {
+      currentWord = s[i].concat(currentWord);
+    }
+  }
+
+  return reverse;
 };
