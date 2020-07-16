@@ -31,7 +31,7 @@ var myPow = function(x, n) {
   if (n === 0) {
     return 1;
   } else if (x === 1 || x === -1){
-    return x;
+    return x < 0 && n < 0 ? Math.abs(x) : x;
   } else if (n > 0) {
 
     while (n > 0) {
