@@ -30,18 +30,37 @@ var myPow = function(x, n) {
 
   if (n === 0) {
     return 1;
-  } else if (n < 0) {
-    while (n >= 0) {
+  } else if (x === 1 || x === -1){
+    return x;
+  } else if (n > 0) {
+
+    while (n > 0) {
       result *= x;
       n -= 1;
     }
+
   } else {
-    while (n <= 0) {
+
+    while (n < 0) {
       result *= x;
       n += 1;
     }
+
     result = 1 / result;
   }
 
-  return result;
+  return Number(result.toFixed(5));
 };
+
+////////////// TESTS /////////////
+
+// should handle positive whole numbers
+console.log(myPow(2.00000, 10) === 1024);
+
+// should handle positive decimals
+console.log(myPow(2.10000, 3) === 9.261);
+
+// should handle negative exponents
+console.log(myPow(2.00000, -2) === 0.25);
+
+console.log(myPow(-1.00000, 2147483647));
