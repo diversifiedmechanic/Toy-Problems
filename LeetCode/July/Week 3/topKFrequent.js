@@ -29,23 +29,23 @@ var topKFrequent = function(nums, k) {
 
   nums.forEach((num) => {
     if (counts[num] === undefined) {
-      counts[num] = [1, store.length - 1];
+      counts[num] = [1, store.length];
       store.push(num);
     } else {
       counts[num][0] += 1;
 
       while (
         counts[store[counts[num][1] - 1]]
-        && counts[num][0] < counts[store[counts[num][1] - 1]][0]
-        && newNumLocation > 0
+        && counts[num][0] > counts[store[counts[num][1] - 1]][0]
+        && counts[num][0] >= 0
       ) {
+        let oldNum = store[counts[num][1] - 1];
         let temp = store[counts[num][1]];
 
         store[counts[num][1]] = store[counts[num][1] - 1];
-
         store[counts[num][1] - 1] = temp;
 
-        counts[store[counts[num][1] - 1]][0] += 1;
+        counts[oldNum][1] += 1;
         counts[num][1] -= 1;
       }
     }
@@ -68,4 +68,14 @@ console.log(JSON.stringify(topKFrequent([1,1,1,2,2,3], 1)) === JSON.stringify([1
 // should return the top two most frequent in an ordered array
 console.log(JSON.stringify(topKFrequent([1,1,1,2,2,3], 2)) === JSON.stringify([1, 2]));
 
-// should
+// should return the most frequent in an array with one element
+console.log(JSON.stringify(topKFrequent([1], 1)) === JSON.stringify([1]));
+
+// should return an empty array if no elements in the array
+console.log(JSON.stringify(topKFrequent([], 0)) === JSON.stringify([]));
+
+// should return the most frequesnt in an unordered array
+console.log(JSON.stringify(topKFrequent([1,2,3,2], 1)) === JSON.stringify([2]));
+
+// // should handle '0's in the input array
+console.log(JSON.stringify(topKFrequent([3,0,1,0], 1)) === JSON.stringify([0]));
