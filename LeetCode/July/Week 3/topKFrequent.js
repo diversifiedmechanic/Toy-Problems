@@ -34,7 +34,11 @@ var topKFrequent = function(nums, k) {
     } else {
       counts[num][0] += 1;
 
-      while (counts[num][0] < counts[store[counts[num][1] - 1]][0] && newNumLocation > 0) {
+      while (
+        counts[store[counts[num][1] - 1]]
+        && counts[num][0] < counts[store[counts[num][1] - 1]][0]
+        && newNumLocation > 0
+      ) {
         let temp = store[counts[num][1]];
 
         store[counts[num][1]] = store[counts[num][1] - 1];
@@ -55,3 +59,13 @@ var topKFrequent = function(nums, k) {
 
   return result;
 };
+
+//////////////////////// TESTS //////////////
+
+// should return the top most frequent in an ordered array
+console.log(JSON.stringify(topKFrequent([1,1,1,2,2,3], 1)) === JSON.stringify([1]));
+
+// should return the top two most frequent in an ordered array
+console.log(JSON.stringify(topKFrequent([1,1,1,2,2,3], 2)) === JSON.stringify([1, 2]));
+
+// should
