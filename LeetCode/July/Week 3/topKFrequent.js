@@ -23,6 +23,37 @@ Note:
 * @return {number[]}
 */
 
+/////////// BUCKETS /////////////
+var topKFrequent = function(nums, k) {
+  let counts = new Map();
+
+  nums.forEach((num) => {
+    if (counts.has(num)) {
+      counts.set(num, counts.get(num) + 1);
+    } else {
+      counts.set(num, 1);
+    }
+  });
+
+  let buckets = Array(nums.length + 1).fill(0).map(() => []);
+
+  counts.forEach((count, val) => {
+    buckets[count].push(val);
+  });
+
+
+  let result = [];
+
+  for (let i = buckets.length - 1; i >= 0 && result.length < k; i--) {
+    result.push(...buckets[i]);
+  }
+
+  return result;
+};
+
+
+//////////// SLOW ////////////
+/*
 var topKFrequent = function(nums, k) {
   let store = [];
   let counts = {};
@@ -59,6 +90,7 @@ var topKFrequent = function(nums, k) {
 
   return result;
 };
+*/
 
 //////////////////////// TESTS //////////////
 
@@ -75,7 +107,7 @@ console.log(JSON.stringify(topKFrequent([1], 1)) === JSON.stringify([1]));
 console.log(JSON.stringify(topKFrequent([], 0)) === JSON.stringify([]));
 
 // should return the most frequesnt in an unordered array
-console.log(JSON.stringify(topKFrequent([1,2,3,2], 1)) === JSON.stringify([2]));
+console.log(JSON.stringify(topKFrequent([1,2,3,2], 1))  === JSON.stringify([2]));
 
 // // should handle '0's in the input array
 console.log(JSON.stringify(topKFrequent([3,0,1,0], 1)) === JSON.stringify([0]));
