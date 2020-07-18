@@ -28,6 +28,8 @@ Explanation: There are a total of 4 courses to take. To take course 3 you should
 */
 
 var findOrder = function(numCourses, prerequisites) {
+  if (numCourses >= 1 && prerequisites.length === 0) prerequisites = [[numCourses - 1, numCourses - 2]];
+
   let highestCourse = prerequisites[0][0];
   let store = {};
 
@@ -35,26 +37,56 @@ var findOrder = function(numCourses, prerequisites) {
     if (course > highestCourse) highestCourse = course;
 
     if (store[course] === undefined) {
-      store[course] = [prereq];
+      store[course] = new Set();
+      store[course].add(prereq);
     } else {
-      store[course].push(prereq);
+      store[course].add(prereq);
     }
   });
 
   let schedule = [highestCourse];
 
-  let pre = [...store[highestCourse]];
+  let pre = [];
+
+  store[highestCourse].forEach((val) => pre.push(val));
 
   while (pre.length) {
-    let temp = [];
+    let temp = new Set();
 
-    pre.forEach((course) => {
-      schedule.unshift(course);
-      temp.push(...store[course]);
-    });
+    for (let i = 0; i < pre.length; i++) {
+      if (pre[i] >= 0) {
 
-    pre = temp;
+        if (schedule.indexOf(pre[i]) !== -1) return [];
+
+        schedule.unshift(pre[i]);
+        if (store[pre[i]] !== undefined) {
+          store[pre[i]].forEach((val) => temp.add(val));
+        }
+      }
+    };
+    pre = Array.from(temp);
   }
 
-  return schedule.length > numCourses ? [] : schedule;
+
+  if (schedule.length < numCourses) {
+    for (let i = 0; i < numCourses; i++) {
+      if (schedule.indexOf(i) === -1) schedule.push(i);
+    }
+  }
+
+  return schedule >= numCourses ? [] : schedule;
 };
+
+////////////////// TESTS ///////////////
+
+// should correctly identify schedule with two classes
+console.log(JSON.stringify(findOrder(2, [[1,0]])) === JSON.stringify([0,1]));
+
+// should work with four classes and multiple prereqs for one class
+console.log(JSON.stringify(findOrder(4, [[1,0],[2,0],[3,1],[3,2]])) === JSON.stringify([0,2,1,3]));
+
+console.log(JSON.stringify(findOrder(2, [])) === JSON.stringify([0,1]));
+
+console.log(JSON.stringify(findOrder(2, [[0,1],[1,0]])) === JSON.stringify([]));
+
+// === JSON.stringify([])
