@@ -21,21 +21,26 @@ Output: 1->2->3->4->5
 */
 
 var removeElements = function(head, val) {
-  let start = head;
-  let prev = null;
+  while (head.val === val) {
+    head = head.next;
+  }
 
-  while (start) {
-    if (start.val === val) {
-      if (prev !== null) {
-        prev = start.next;
-        start = start.next;
-      } else {
-        head = head.next;
-      }
+  let list = new ListNode(head.val);
+  let newHead = list;
+
+  head = head.next;
+
+  while (head) {
+    if (head.val === val) {
+      head = head.next;
+    } else {
+      list.next = new ListNode(head.val);
+      list = list.next;
+      head = head.next;
     }
   }
 
-  return head;
+  return newHead;
 };
 
 //////////// HELPERS ////////////
@@ -56,3 +61,13 @@ const buildLinkedList = function(arr) {
   return head;
 };
 
+//////////////// TESTS //////////////////
+
+var list = buildLinkedList([1,2,3,4]);
+var result = JSON.stringify(removeElements(list, 3));
+var expected = JSON.stringify(buildLinkedList([1,2,4]));
+
+// Should remove an element from a linked list
+console.log(result === expected);
+
+// should remove multiple elements from a linked list
