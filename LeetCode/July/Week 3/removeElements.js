@@ -21,8 +21,11 @@ Output: 1->2->3->4->5
 */
 
 var removeElements = function(head, val) {
+  if (!head) return head;
+
   while (head.val === val) {
     head = head.next;
+    if (!head) return head;
   }
 
   let list = new ListNode(head.val);
@@ -70,4 +73,23 @@ var expected = JSON.stringify(buildLinkedList([1,2,4]));
 // Should remove an element from a linked list
 console.log(result === expected);
 
+list = buildLinkedList([1,2,3,4,3,3,1]);
+result = JSON.stringify(removeElements(list, 3));
+expected = JSON.stringify(buildLinkedList([1,2,4,1]));
+
 // should remove multiple elements from a linked list
+console.log(result === expected);
+
+list = buildLinkedList([]);
+result = JSON.stringify(removeElements(list, 3));
+expected = JSON.stringify(buildLinkedList([]));
+
+// should return null on an empty list
+console.log(result === null);
+
+list = buildLinkedList([1]);
+result = JSON.stringify(removeElements(list, 1));
+// expected = JSON.stringify(buildLinkedList([]));
+
+// should return null
+console.log(result === null);
