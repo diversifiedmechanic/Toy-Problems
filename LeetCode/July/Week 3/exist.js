@@ -30,37 +30,51 @@ Constraints:
 * @return {boolean}
 */
 
-var copyBoard = function(board) {
-  let c = [];
-  board.forEach(row => c.push([...row]));
-  return c;
-};
-
 var traceWord = function(board, word, i, j) {
   if (word.length === 0) return true;
 
   // up
   if (board[i + 1] && board[i + 1][j] === word[0]) {
+    let letter = board[i + 1][j];
     board[i + 1][j] = '';
-    if (traceWord(board, word.slice(1), i + 1, j)) return true;
+    if (traceWord(board, word.slice(1), i + 1, j)) {
+      return true;
+    } else {
+      board[i + 1][j] = letter;
+    }
   }
 
   // down
   if (board[i - 1] && board[i - 1][j] === word[0]) {
+    let letter = board[i - 1][j];
     board[i - 1][j] = '';
-    if (traceWord(board, word.slice(1), i - 1, j)) return true;
+    if (traceWord(board, word.slice(1), i - 1, j)) {
+       return true;
+    } else {
+      board[i - 1][j] = letter;
+    }
   }
 
   // right
   if (board[i][j + 1] === word[0]) {
+    let letter = board[i][j + 1];
     board[i][j + 1] = '';
-    if (traceWord(board, word.slice(1), i, j + 1)) return true;
+    if (traceWord(board, word.slice(1), i, j + 1)) {
+      return true;
+    } else {
+      board[i][j + 1] = letter;
+    }
   }
 
   // left
   if (board[i][j - 1] === word[0]) {
+    let letter = board[i][j - 1];
     board[i][j - 1] = '';
-    if (traceWord(board, word.slice(1), i, j - 1)) return true;
+    if (traceWord(board, word.slice(1), i, j - 1)) {
+      return true;
+    } else {
+      board[i][j - 1] = letter;
+    }
   }
 
   return false;
@@ -70,9 +84,13 @@ var exist = function(board, word) {
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
       if (board[i][j] === word[0]) {
-        let copy = copyBoard(board);
-        copy[i][j] = '';
-        if (traceWord(copy, word.slice(1), i, j)) return true;
+        let letter = board[i][j];
+        board[i][j] = '';
+        if (traceWord(board, word.slice(1), i, j)) {
+          return true;
+        } else {
+          board[i][j] = letter;
+        }
       }
     }
   }
@@ -92,8 +110,22 @@ var board =
 var word = "ABCCED";
 console.log(exist(board, word) === true);
 
+var board =
+[
+  ['A','B','C','E'],
+  ['S','F','C','S'],
+  ['A','D','E','E']
+];
+
 word = "SEE";
 console.log(exist(board, word) === true);
+
+var board =
+[
+  ['A','B','C','E'],
+  ['S','F','C','S'],
+  ['A','D','E','E']
+];
 
 word = "ABCB";
 console.log(exist(board, word) === false);
@@ -106,3 +138,12 @@ board = [
 
 word = "AAB";
 console.log(exist(board, word) === true);
+
+board = [
+  ["A","B","C","E"],
+  ["S","F","E","S"],
+  ["A","D","E","E"]
+];
+
+word = "ABCESEEEFS";
+console.log(exist(board,word) === true);
