@@ -33,38 +33,66 @@ return its zigzag level order traversal as:
 */
 
 var zigzagLevelOrder = function(root) {
+  if (!root) return [];
+
   let stack = [[root, 0]];
   let tree = [[root.val]];
 
   while (stack.length) {
-    let [{val, right, left}, depth] = stack.pop();
-
-    if (right) {
-      stack.push([right, depth + 1]);
-
-      if (tree[depth + 1] === undefined) {
-        tree[depth + 1] = [[right.val, depth + 1]];
-      } else {
-        tree[depth + 1].push([right.val, depth + 1]);
-      }
-    }
+    let [{val, right, left}, depth] = stack.shift();
 
     if (left) {
       stack.push([left, depth + 1]);
 
       if (tree[depth + 1] === undefined) {
-        tree[depth + 1] = [[left.val, depth + 1]];
+        tree[depth + 1] = [left.val];
       } else {
-        tree[depth + 1].push([left.val, depth + 1]);
+        tree[depth + 1].push(left.val);
+      }
+    }
+
+    if (right) {
+      stack.push([right, depth + 1]);
+
+      if (tree[depth + 1] === undefined) {
+        tree[depth + 1] = [right.val];
+      } else {
+        tree[depth + 1].push(right.val);
       }
     }
   }
 
-  console.log(tree);
+  tree.forEach((row, idx) => {
+    if (idx % 2 !== 0) {
+      tree[idx] = tree[idx].reverse();
+    }
+  });
 
-
-  return result;
+  return tree;
 };
 
 ////////// TESTS /////////////
+function TreeNode(val, left, right) {
+  this.val = (val===undefined ? 0 : val)
+  this.left = (left===undefined ? null : left)
+  this.right = (right===undefined ? null : right)
+};
+
+var node = new TreeNode(1);
+node.left = new TreeNode(2);
+node.right = new TreeNode(3);
+node.left.left = new TreeNode(4);
+node.left.right = new TreeNode(5);
+node.right.left = new TreeNode(6);
+node.right.right = new TreeNode(7);
+node.left.left.left = new TreeNode(8);
+node.left.left.right = new TreeNode(9);
+node.left.right.left = new TreeNode(10);
+node.left.right.right = new TreeNode(11);
+node.right.left.left = new TreeNode(12);
+node.right.left.right = new TreeNode(13);
+node.right.right.left = new TreeNode(14);
+node.right.right.right = new TreeNode(15);
+
+console.log(zigzagLevelOrder(node));
 
