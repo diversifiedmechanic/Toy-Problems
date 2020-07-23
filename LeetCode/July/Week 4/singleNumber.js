@@ -28,3 +28,17 @@ var singleNumber = function(nums) {
   return Array.from(set);
 };
 
+/////////// TESTS //////////
+
+var input = [1,2,1,3,2,5];
+var expected = JSON.stringify([3,5]);
+var result = JSON.stringify(singleNumber(input));
+
+console.log(expected === result);
+
+var input = [3,5];
+var expected = JSON.stringify([3,5]);
+var result = JSON.stringify(singleNumber(input));
+
+console.log(expected === result);
+
