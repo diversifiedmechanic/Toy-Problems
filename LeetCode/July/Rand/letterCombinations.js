@@ -28,6 +28,7 @@ var numToLetters = {
 };
 
 var letterCombinations = function(digits) {
+  if (digits.length === 0) return [];
   // base case
   // if one number left
   if (digits.length === 1) {
@@ -39,13 +40,32 @@ var letterCombinations = function(digits) {
   // pass digits after current digit to letterCombinations
   let wordArr = letterCombinations(digits.slice(1));
 
+  let result = [];
+
   // for each letter for the current digit
-  numToLetters[digits[0]].map((currentDigitLetter) => {
+  numToLetters[digits[0]].split('').forEach((currentDigitLetter) => {
     // for each index in the returned array
-    wordArr.forEach((word) => word = currentDigitLetter + word);
+    wordArr.forEach((word) => {
+      result.push(currentDigitLetter + word);
+    });
       // set the value at the index equal to the current letter plus the prev value
   });
 
-  // return words
-  return wordArr;
+  return result;
 };
+
+/////////////////////// TESTS /////////////////////
+var result = JSON.stringify(letterCombinations('23'));
+var expected = JSON.stringify(["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"]);
+
+console.log(result === expected);
+
+result = JSON.stringify(letterCombinations('84'));
+expected = JSON.stringify(["tg","th","ti","ug","uh","ui","vg","vh","vi"]);
+
+console.log(result === expected);
+
+result = JSON.stringify(letterCombinations([]));
+expected = JSON.stringify([]);
+
+console.log(result === expected);
