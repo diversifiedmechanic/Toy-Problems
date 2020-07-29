@@ -28,5 +28,24 @@ var numToLetters = {
 };
 
 var letterCombinations = function(digits) {
+  // base case
+  // if one number left
+  if (digits.length === 1) {
+    // return the letters for that number, split
+    return numToLetters[digits].split('');
+  }
 
+  // recursive case
+  // pass digits after current digit to letterCombinations
+  let wordArr = letterCombinations(digits.slice(1));
+
+  // for each letter for the current digit
+  numToLetters[digits[0]].map((currentDigitLetter) => {
+    // for each index in the returned array
+    wordArr.forEach((word) => word = currentDigitLetter + word);
+      // set the value at the index equal to the current letter plus the prev value
+  });
+
+  // return words
+  return wordArr;
 };
