@@ -24,6 +24,8 @@ Output: 1->2->3
 */
 
 var deleteDuplicates = function(head) {
+    if (!head) return head;
+
     let newHead = head;
     let previousNode = head;
 
@@ -32,12 +34,51 @@ var deleteDuplicates = function(head) {
     while(currentNode) {
         if (currentNode.val === previousNode.val) {
             previousNode.next = currentNode.next;
+        } else {
+            previousNode = currentNode;
         }
-
-        previousNode = currentNode;
         currentNode = currentNode.next;
     }
 
     return newHead;
 };
 
+/////////////////// TESTS /////////////////
+
+function ListNode(val, next) {
+    this.val = (val===undefined ? 0 : val)
+    this.next = (next===undefined ? null : next)
+}
+
+let A = new ListNode(1);
+A.next = new ListNode(1);
+
+// should remove a single duplicate
+console.log(deleteDuplicates(A));
+
+A = new ListNode(1);
+B = new ListNode(2);
+A.next = B;
+let C = new ListNode(2);
+B.next = C;
+
+// should only remove duplicates
+console.log(deleteDuplicates(A));
+
+A = new ListNode(1);
+B = new ListNode(2);
+A.next = B;
+C = new ListNode(3);
+B.next = C;
+
+// should do nothing if no duplicates
+console.log(deleteDuplicates(A));
+
+A = new ListNode(1);
+B = new ListNode(1);
+A.next = B;
+C = new ListNode(1);
+B.next = C;
+
+// should remove triples
+console.log(deleteDuplicates(A));
