@@ -24,5 +24,20 @@ Output: 1->2->3
 */
 
 var deleteDuplicates = function(head) {
-    
+    let newHead = head;
+    let previousNode = head;
+
+    let currentNode = head.next;
+
+    while(currentNode) {
+        if (currentNode.val === previousNode.val) {
+            previousNode.next = currentNode.next;
+        }
+
+        previousNode = currentNode;
+        currentNode = currentNode.next;
+    }
+
+    return newHead;
 };
+
