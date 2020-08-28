@@ -15,5 +15,20 @@ Output:
  * @return {number[]}
  */
 var findDuplicates = function(nums) {
-    
+    let results = [];
+
+    nums.forEach((num) => {
+        // find the index for the current number
+        let index = num - 1;
+
+        // if it is negative, add to the results array
+        if (nums[index] < 0) {
+            results.push(num);
+        } else {
+            // otherwise, make the number at the index negative
+            nums[index] *= -1;
+        }
+    });
+
+    return results;
 };
